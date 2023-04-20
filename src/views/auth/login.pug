@@ -1,0 +1,24 @@
+extends ../templates/header-index
+
+block styles 
+  link(rel="stylesheet", href="/css/dist/login.css")
+
+block contenido
+  main.main
+    section.section
+      form.form(action="") 
+        h1.form__title Murph
+        div.form__inputs
+          div.form__container
+            label.form__label(for="email") email
+            input.form__input#email(type="text", name="email", placeholder="insert your email")
+            span.form__decoration
+          div.form__container
+            label.form__label(for="password") password
+            input.form__input#password(type="password", name="password", placeholder="insert your password" )
+            span.form__decoration
+          input.form__submit(type="submit", value="Login")
+      picture.picture
+        img.picture__img(src="/img/logo.png", alt="murph" id="logo")
+block scripts
+  script(src="/js/login.js") 
