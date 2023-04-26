@@ -1,0 +1,23 @@
+.main {
+  min-height: 100vh;
+  background-color: #1d2532;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 2rem;
+}
+.main__title {
+  font-size: 3em;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  line-height: 1.2;
+}
+.main__link {
+  font-size: 1.5em;
+  color: #fff;
+}
+.main__link:hover {
+  text-decoration: underline;
+}/*# sourceMappingURL=confirmCount.css.map */

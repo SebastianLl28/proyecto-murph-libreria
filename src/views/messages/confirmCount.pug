@@ -1,0 +1,10 @@
+extends ../templates/header-index
+
+block styles 
+  link(rel="stylesheet", href="/css/dist/confirmCount.css")
+
+block contenido
+  main.main
+    h1.main__title= msg
+    if (confirm)
+      a.main__link(href="/auth/login") Login
