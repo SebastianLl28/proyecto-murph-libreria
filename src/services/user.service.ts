@@ -46,14 +46,23 @@ const changeUserData = async (id: ObjectId, prop: keyof User, value: any): Promi
   }
 }
 
-const searchUserByData = async (prop: keyof User, value: any): Promise<User | null> => {
-  const update: any = {}
-  update[prop] = value
-  const user = await UserModel.findOne(update)
-  if (user === null) {
-    return null
+const searchUserbyId = async (id: ObjectId): Promise<User | null> => {
+  try {
+    const user = await UserModel.findById(id)
+    if (user === null) {
+      return null
+    }
+    return user
+  } catch (err) {
+    throw new Error('Error en searchUser')
   }
-  return user
+}
+
+const findAllUsers = async (): Promise< object > => {
+  const users = await UserModel.find({}).select('name lastname email -_id')
+  // const transform = JSON.stringify(users, null, 2)
+  return users
+  // console.log(typeof transform)
 }
 
 export {
@@ -62,5 +71,6 @@ export {
   userIsConfirmed,
   userSetToken,
   changeUserData,
-  searchUserByData
+  searchUserbyId,
+  findAllUsers
 }

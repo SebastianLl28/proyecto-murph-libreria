@@ -163,6 +163,8 @@ body {
   min-height: 100vh;
   font-size: 100%;
   font-family: var(--tipo-principal);
+  color: #fff;
+  background-color: #1d2532;
   /* opcional */
   line-height: 1.4em;
   /* opcional */

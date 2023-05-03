@@ -1,0 +1,20 @@
+extends ../templates/head-app
+
+block styles 
+  link(rel="stylesheet", href="/css/dist/category.css")
+
+
+block contenido
+  section.section
+    article.table
+      h2.table__title Category
+      div.card
+
+    div.form
+      h2.form__title New Category
+      div.form__container
+        label(for="name") Name
+        input#name.form__input(type="text", name="name")
+        span.form__decoration
+      input.form__submit(type="submit", value="Add")
+

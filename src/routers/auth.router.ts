@@ -1,12 +1,13 @@
 import { Router } from 'express'
-import { confirmationAccount, formChangePassword, formChangePasswordPost, formLogin, formLoginPost, formRecoverPassword, formRecoverPasswordPost, formRegister, formRegisterPost } from '../controller/usuario.controller'
+import { confirmationAccount, formChangePassword, formChangePasswordPost, formLogin, formLoginPost, formRecoverPassword, formRecoverPasswordPost, formRegister, formRegisterPost } from '../controller/auth.controller'
 import { validationRegister } from '../middleware/register.middleware'
 import validationChangedPassword from '../middleware/changepassword.middleware'
+import validationLogin from '../middleware/login.middleware'
 
 const router = Router()
 
 router.get('/login', formLogin)
-router.post('/login', formLoginPost)
+router.post('/login', validationLogin, formLoginPost)
 router.get('/register', formRegister)
 router.post('/register', validationRegister, formRegisterPost)
 router.get('/recover-password', formRecoverPassword)

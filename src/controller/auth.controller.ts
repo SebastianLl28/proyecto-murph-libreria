@@ -3,7 +3,8 @@ import { registerUser, searchToken, searchTokenAndDelete } from '../services/aut
 import { sendEmailPassword, sendMail } from '../config/emailer'
 import { changeUserConfirm, changeUserData, searchUserbyEmail, userIsConfirmed, userSetToken } from '../services/user.service'
 import createToken from '../helpers/createToken'
-import { encrypt } from '../helpers/bcrypt.handle'
+import { encrypt, verified } from '../helpers/bcrypt.handle'
+import generatejwt from '../helpers/jwt.helpers'
 
 const formLogin = (_req: Request, res: Response): void => {
   res.render('auth/login', {
@@ -11,9 +12,39 @@ const formLogin = (_req: Request, res: Response): void => {
   })
 }
 
-const formLoginPost = async (req: Request, _res: Response): Promise<void> => {
-  console.log('creado correctamente')
-  console.log(req.body)
+const formLoginPost = async (req: Request, res: Response): Promise<void> => {
+  const { email, password } = req.body
+  const user = await searchUserbyEmail(email)
+
+  // si el usuario no se encuentra
+  if (user === null) {
+    return res.render('auth/login', {
+      pagina: 'Login',
+      user: { email },
+      errors: [{ msg: 'the email or password is wrong' }]
+    })
+  }
+
+  const isPasswordValid = await verified(password, user.password)
+
+  // Si el password no councide
+  if (!isPasswordValid) {
+    return res.render('auth/login', {
+      pagina: 'Login',
+      user: { email },
+      errors: [{ msg: 'the email or password is wrong' }]
+    })
+  }
+
+  const { id, name } = user
+
+  const token = generatejwt(id, name, email)
+
+  return res.cookie('_token', token, {
+    httpOnly: true
+    // secure: true, // Cuando tienes sertificado SSL
+    // sameSite: true // Cuando tienes sertificado SS
+  }).redirect('/app/dashboard')
 }
 
 const formRegister = (_req: Request, res: Response): void => {

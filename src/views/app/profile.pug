@@ -1,0 +1,8 @@
+extends ../templates/head-app
+
+block styles 
+  link(rel="stylesheet", href="/css/dist/profile.css")
+
+block contenido
+  form(action="signOff" method="POST") 
+    input.btn(type="submit", value="Cerrar Sesión")

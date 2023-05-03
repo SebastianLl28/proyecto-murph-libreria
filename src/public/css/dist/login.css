@@ -112,4 +112,35 @@
   100% {
     transform: rotate(360deg);
   }
+}
+.errors {
+  position: fixed;
+  right: 1rem;
+  bottom: 0;
+  z-index: 1;
+}
+.errors__message {
+  color: white;
+  border: 1px solid red;
+  background-color: rgb(255, 57, 57);
+  padding: 1em;
+  margin-top: 1em;
+}
+.errors__image {
+  height: auto;
+  width: 10rem;
+}
+
+.is-invalid {
+  border-color: rgb(255, 49, 49);
+}
+.is-invalid ~ span::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 20rem;
+  position: absolute;
+  color: rgb(255, 49, 49);
+  content: "it is required";
+  top: 2px;
 }/*# sourceMappingURL=login.css.map */
