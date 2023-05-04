@@ -1,6 +1,8 @@
 import { Response } from 'express'
 import { Request } from '../interface/request.interface'
 import { User } from '../interface/user.interface'
+import { allCategories } from '../services/category.services'
+import { format } from 'date-fns'
 
 const dashboard = (req: Request, res: Response): void => {
   const { name } = req.user as User
@@ -10,9 +12,27 @@ const dashboard = (req: Request, res: Response): void => {
   })
 }
 
-const category = (_req: Request, res: Response): void => {
+const category = async (_req: Request, res: Response): Promise<void> => {
+  const categories = await allCategories()
+  const listCategories = Object.values(categories)
+  // list.forEach(element => {
+  //   console.log(element)
+  // })
+
+  const newList = listCategories.map((element) => {
+    const fechaMongo = new Date(element.createdAt)
+    const date = format(fechaMongo, 'dd/MM/yyyy')
+    element.date = date
+    console.log(date)
+    const { name } = element
+    return { name, date }
+  })
+
+  console.log(newList)
+
   res.render('app/category', {
-    pagina: 'Category'
+    pagina: 'Category',
+    categories: newList
   })
 }
 

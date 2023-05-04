@@ -42,17 +42,8 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 0.5fr;
+  align-items: start;
   gap: 2em;
-}
-
-.table {
-  padding: 1rem;
-  background-color: #1d2532;
-  box-shadow: 20px 20px 60px #191f2b;
-}
-.table__title {
-  text-align: center;
-  font-size: 1.5em;
 }
 
 .form {
@@ -100,4 +91,68 @@
 .form__submit:hover {
   background-color: #fff;
   color: #1d2532;
+}
+
+.table {
+  padding: 1rem;
+  background-color: #1d2532;
+  box-shadow: 20px 20px 60px #191f2b;
+  max-height: 80vh;
+  overflow-y: scroll;
+}
+.table__title {
+  text-align: center;
+  font-size: 1.5em;
+}
+.table__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.card {
+  background-color: #171c24;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+  padding: 1em;
+}
+.card__title {
+  text-align: center;
+  font-size: 1.3em;
+}
+.card__container {
+  display: flex;
+  gap: 0.6em;
+}
+.card__container p {
+  font-weight: bold;
+}
+.card__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.card__edit {
+  background-color: rgb(143, 143, 0);
+  padding: 0.8em 2em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.4s;
+  font-weight: bold;
+}
+.card__edit:hover {
+  background-color: #a9a900;
+}
+.card__delete {
+  background-color: #ff1818;
+  padding: 0.8em 2em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.4s;
+  font-weight: bold;
+}
+.card__delete:hover {
+  background-color: #ff3232;
 }/*# sourceMappingURL=category.css.map */

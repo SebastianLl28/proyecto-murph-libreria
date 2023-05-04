@@ -8,13 +8,32 @@ block contenido
   section.section
     article.table
       h2.table__title Category
-      div.card
+      div.table__container
+        
+        //- div.card
+        //-   h2.card__title Titulo
+        //-   div.card__container
+        //-     p fecha:
+        //-     span 23 de Octubre
+        //-   div.card__buttons
+        //-     button.card__edit Edit 
+        //-     button.card__delete Delete  
 
-    div.form
+        each category in categories
+          div.card
+            h2.card__title= category.name
+            div.card__container
+              p fecha:
+              span= category.date
+            div.card__buttons
+              button.card__edit Edit 
+              button.card__delete Delete  
+
+
+    form.form(method="POST" action="/category/add")
       h2.form__title New Category
       div.form__container
         label(for="name") Name
         input#name.form__input(type="text", name="name")
         span.form__decoration
       input.form__submit(type="submit", value="Add")
-

@@ -7,6 +7,7 @@ import cors from 'cors'
 import routerApi from './routers/api.router'
 import routerapp from './routers/app.router'
 import router from './routers/auth.router'
+import routerCategory from './routers/category.router'
 
 const app = express()
 
@@ -26,6 +27,7 @@ app.use(cookieParser())
 app.use('/api', routerApi)
 app.use('/auth', router)
 app.use('/app', routerapp)
+app.use('/category', routerCategory)
 
 // ? Set: Para agregar configuración
 app.set('view engine', 'pug')
