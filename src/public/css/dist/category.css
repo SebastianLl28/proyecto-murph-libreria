@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .header {
   width: 100%;
   padding: 1rem 0;
@@ -99,6 +100,26 @@
   box-shadow: 20px 20px 60px #191f2b;
   max-height: 80vh;
   overflow-y: scroll;
+  /* Ponemos un color de fondo y redondeamos las esquinas del thumb */
+  /* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+  /* Cambiamos el fondo cuando esté en active */
+  /* Ponemos un color de fondo y redondeamos las esquinas del track */
+  /* Cambiamos el fondo cuando esté en active o hover */
+}
+.table::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.table::-webkit-scrollbar-thumb {
+  background: #171c24;
+  border-radius: 4px;
+}
+.table::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+.table::-webkit-scrollbar-thumb:active {
+  background-color: #999999;
 }
 .table__title {
   text-align: center;
@@ -106,12 +127,14 @@
 }
 .table__container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  gap: 1.5rem;
   margin-top: 1rem;
+  justify-items: center;
 }
 
 .card {
+  max-width: 18.4rem;
   background-color: #171c24;
   border-radius: 5px;
   display: flex;
@@ -133,10 +156,11 @@
 .card__buttons {
   display: flex;
   justify-content: space-between;
+  gap: 1em;
 }
 .card__edit {
   background-color: rgb(143, 143, 0);
-  padding: 0.8em 2em;
+  padding: 0.5em 1.5em;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.4s;
@@ -147,7 +171,7 @@
 }
 .card__delete {
   background-color: #ff1818;
-  padding: 0.8em 2em;
+  padding: 0.5em 1.5em;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.4s;
@@ -155,4 +179,36 @@
 }
 .card__delete:hover {
   background-color: #ff3232;
+}
+
+.errors {
+  position: fixed;
+  right: 1rem;
+  bottom: 0;
+  z-index: 1;
+}
+.errors__message {
+  color: white;
+  border: 1px solid red;
+  background-color: rgb(255, 57, 57);
+  padding: 1em;
+  margin-top: 1em;
+}
+.errors__image {
+  height: auto;
+  width: 10rem;
+}
+
+.is-invalid {
+  border-color: rgb(255, 49, 49);
+}
+.is-invalid ~ span::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 20rem;
+  position: absolute;
+  color: rgb(255, 49, 49);
+  content: "is required or already registered";
+  top: 2px;
 }/*# sourceMappingURL=category.css.map */

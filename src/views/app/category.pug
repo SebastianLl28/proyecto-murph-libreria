@@ -5,6 +5,13 @@ block styles
 
 
 block contenido
+
+  if errors
+    div.errors
+      each error in errors
+          p.errors__message(data-parent=error.path )= error.msg
+      img.errors__image(src="/img/flork-basado.gif", alt="")
+
   section.section
     article.table
       h2.table__title Category
@@ -26,9 +33,11 @@ block contenido
               p fecha:
               span= category.date
             div.card__buttons
-              button.card__edit Edit 
-              button.card__delete Delete  
-
+              //- a(href=`./category/edit/${category.id}`).card__edit Edit
+              form(action="POST" method=`/category/edit/${category.id}`) 
+                input.card__edit(type="submit", value="Edit")
+              form(action="POST" method=`/category/delete/${category.id}`) 
+                input.card__delete(type="submit", value="Delete")
 
     form.form(method="POST" action="/category/add")
       h2.form__title New Category
@@ -37,3 +46,6 @@ block contenido
         input#name.form__input(type="text", name="name")
         span.form__decoration
       input.form__submit(type="submit", value="Add")
+
+block scripts
+  script(src="/js/register.js")
