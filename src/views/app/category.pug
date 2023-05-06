@@ -27,25 +27,32 @@ block contenido
         //-     button.card__delete Delete  
 
         each category in categories
-          div.card
+          div(class=`${categorieEdit ? categorieEdit.id == category.id ? 'card-active' : '' : ''} card`)
             h2.card__title= category.name
             div.card__container
               p fecha:
               span= category.date
             div.card__buttons
-              //- a(href=`./category/edit/${category.id}`).card__edit Edit
-              form(action="POST" method=`/category/edit/${category.id}`) 
+              form(method="GET" action=`/category/edit/${category.id}`) 
                 input.card__edit(type="submit", value="Edit")
-              form(action="POST" method=`/category/delete/${category.id}`) 
+              form(method="POST" action=`/category/delete/${category.id}`) 
                 input.card__delete(type="submit", value="Delete")
-
-    form.form(method="POST" action="/category/add")
-      h2.form__title New Category
-      div.form__container
-        label(for="name") Name
-        input#name.form__input(type="text", name="name")
-        span.form__decoration
-      input.form__submit(type="submit", value="Add")
+    if categorieEdit
+      form.form.card-active(method="POST" action=`/category/edit/${categorieEdit.id}`)
+        h2.form__title Edit Category
+        div.form__container
+          label(for="name") Name
+          input#name.form__input(type="text", name="name", value= name ? name : '')
+          span.form__decoration
+        input.form__submit(type="submit", value="Edit") 
+    else 
+      form.form(method="POST" action="/category/add")
+        h2.form__title New Category
+        div.form__container
+          label(for="name") Name
+          input#name.form__input(type="text", name="name", value = name ? name : '')
+          span.form__decoration
+        input.form__submit(type="submit", value="Add")
 
 block scripts
   script(src="/js/register.js")

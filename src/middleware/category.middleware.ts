@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { check, validationResult } from 'express-validator'
-import { verifyCategory } from '../services/category.services'
+import { seachCategoryById, verifyCategory } from '../services/category.services'
 import { listCategories } from '../helpers/category.helpers'
 import { toTitleCase } from '../helpers/formatText'
 
@@ -37,12 +37,53 @@ const verifyNameCategory = async (req: Request, res: Response, next: NextFunctio
       categories
     })
   }
+  next()
+}
 
-  console.log('Se registro correctamente')
+const checkCategoryEditName = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const { name } = req.body
 
+  const { id } = req.params
+  const categorieEdit = await seachCategoryById(id)
+
+  await check('name').notEmpty().withMessage('name is required').run(req)
+
+  const reuslt = validationResult(req)
+
+  const categories = await listCategories()
+
+  if (categorieEdit == null) {
+    return res.redirect('/app/category')
+  }
+
+  if (!reuslt.isEmpty()) {
+    return res.render('app/category', {
+      pagina: 'Category',
+      errors: reuslt.array(),
+      categories,
+      categorieEdit,
+      name: categorieEdit.name
+    })
+  }
+
+  const isregistered = await verifyCategory(toTitleCase(name))
+
+  if (isregistered) {
+    // enviar a tangamandapio
+    console.log(categorieEdit)
+    console.log('ya esta registrado ._.')
+    return res.render('app/category', {
+      pagina: 'Category',
+      errors: [{ msg: 'The category is registared', path: 'name' }],
+      categories,
+      categorieEdit,
+      name: categorieEdit.name
+    })
+  }
   next()
 }
 
 export {
-  verifyNameCategory
+  verifyNameCategory,
+  checkCategoryEditName
 }

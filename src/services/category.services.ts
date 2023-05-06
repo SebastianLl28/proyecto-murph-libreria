@@ -29,8 +29,32 @@ const verifyCategory = async (name: string): Promise<boolean> => {
   return true
 }
 
+const seachCategoryById = async (id: string): Promise<Category | null> => {
+  try {
+    const category = await CategoryModel.findById(id)
+    if (category === null) {
+      return null
+    }
+    return category
+  } catch (err) {
+    return null
+  }
+}
+
+const changeCategoryData = async (id: string, prop: keyof Category, value: any): Promise<void> => {
+  try {
+    const update: any = {}
+    update[prop] = value
+    await CategoryModel.findByIdAndUpdate(id, update)
+  } catch (err) {
+    throw new Error(err as string)
+  }
+}
+
 export {
   addCategory,
   allCategories,
-  verifyCategory
+  verifyCategory,
+  seachCategoryById,
+  changeCategoryData
 }
