@@ -162,7 +162,7 @@
   gap: 1em;
 }
 .card__edit {
-  background-color: rgb(143, 143, 0);
+  border: 2px solid rgb(143, 143, 0);
   padding: 0.5em 1.5em;
   border-radius: 5px;
   cursor: pointer;
@@ -170,10 +170,10 @@
   font-weight: bold;
 }
 .card__edit:hover {
-  background-color: #a9a900;
+  background-color: rgb(143, 143, 0);
 }
 .card__delete {
-  background-color: #ff1818;
+  border: 2px solid #ff1818;
   padding: 0.5em 1.5em;
   border-radius: 5px;
   cursor: pointer;
@@ -181,7 +181,7 @@
   font-weight: bold;
 }
 .card__delete:hover {
-  background-color: #ff3232;
+  background-color: #ff1818;
 }
 
 .errors {

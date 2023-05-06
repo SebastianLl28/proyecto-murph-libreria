@@ -3,7 +3,6 @@ extends ../templates/head-app
 block styles 
   link(rel="stylesheet", href="/css/dist/category.css")
 
-
 block contenido
 
   if errors
@@ -55,4 +54,6 @@ block contenido
         input.form__submit(type="submit", value="Add")
 
 block scripts
+  script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11") 
   script(src="/js/register.js")
+  script(src="/js/category.js", type="module")

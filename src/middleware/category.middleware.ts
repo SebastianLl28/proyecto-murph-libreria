@@ -80,6 +80,7 @@ const checkCategoryEditName = async (req: Request, res: Response, next: NextFunc
       name: categorieEdit.name
     })
   }
+
   next()
 }
 

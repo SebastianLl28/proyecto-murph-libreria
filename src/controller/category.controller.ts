@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { addCategory, changeCategoryData, seachCategoryById } from '../services/category.services'
 import { listCategories } from '../helpers/category.helpers'
+import { toTitleCase } from '../helpers/formatText'
 
 const addcategoryPost = async (req: Request, res: Response): Promise<void> => {
   const { name } = req.body
@@ -31,7 +32,18 @@ const editCategoryPost = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params
     const { name } = req.body
-    await changeCategoryData(id, 'name', name)
+    const newName = toTitleCase(name)
+    await changeCategoryData(id, 'name', newName)
+    res.redirect('/app/category')
+  } catch (err) {
+    throw new Error(err as string)
+  }
+}
+
+const deleteCategoryPost = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params
+    await changeCategoryData(id, 'active', false)
     res.redirect('/app/category')
   } catch (err) {
     throw new Error(err as string)
@@ -46,5 +58,6 @@ export {
   addcategoryPost,
   editCategoryGet,
   editCategoryPost,
-  categoryNotFound
+  categoryNotFound,
+  deleteCategoryPost
 }
