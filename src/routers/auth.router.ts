@@ -3,6 +3,7 @@ import { confirmationAccount, formChangePassword, formChangePasswordPost, formLo
 import { validationRegister } from '../middleware/register.middleware'
 import validationChangedPassword from '../middleware/changepassword.middleware'
 import validationLogin from '../middleware/login.middleware'
+// import verifyToken from '../middleware/verifyToken.middleware'
 
 const router = Router()
 

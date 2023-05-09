@@ -51,10 +51,34 @@ const changeCategoryData = async (id: string, prop: keyof Category, value: any):
   }
 }
 
+const searchCategoryByName = async (query: string): Promise<object> => {
+  try {
+    const regex = new RegExp(`\\b${query}\\w*`, 'i')
+    const categories = await CategoryModel.find({ name: regex }).exec()
+    return categories
+  } catch (err) {
+    throw new Error(err as string)
+  }
+}
+
+const testSearchCategory = async (page: number): Promise<object> => {
+  try {
+    const elementforPage = 12
+    const offset = (page - 1) * elementforPage
+    console.log(offset)
+    const category = await CategoryModel.find({ active: true }).skip(offset).limit(elementforPage)
+    return category
+  } catch (err) {
+    throw new Error(err as string)
+  }
+}
+
 export {
   addCategory,
   allCategories,
   verifyCategory,
   seachCategoryById,
-  changeCategoryData
+  searchCategoryByName,
+  changeCategoryData,
+  testSearchCategory
 }

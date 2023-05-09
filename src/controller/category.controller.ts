@@ -1,7 +1,9 @@
 import { Request, Response } from 'express'
-import { addCategory, changeCategoryData, seachCategoryById } from '../services/category.services'
+import { addCategory, changeCategoryData, seachCategoryById, searchCategoryByName } from '../services/category.services'
 import { listCategories } from '../helpers/category.helpers'
 import { toTitleCase } from '../helpers/formatText'
+import { formatDateBasic } from '../helpers/formatdate.helpers'
+import { addDays, startOfDay, startOfMonth, startOfWeek } from 'date-fns'
 
 const addcategoryPost = async (req: Request, res: Response): Promise<void> => {
   const { name } = req.body
@@ -50,6 +52,41 @@ const deleteCategoryPost = async (req: Request, res: Response): Promise<void> =>
   }
 }
 
+const categorySearchGet = async (req: Request, res: Response): Promise<void> => {
+  const { search, chkactive } = req.body
+  console.log(req.body)
+
+  const result = startOfDay(new Date())
+  const result1 = addDays(startOfWeek(new Date()), 1)
+  const result2 = startOfMonth(new Date())
+  console.log(`result in start of day: ${formatDateBasic(result.toString())}`)
+  console.log(`result in start of week: ${formatDateBasic(result1.toString())}`)
+  console.log(`result in start of month: ${formatDateBasic(result2.toString())}`)
+
+  const categories = await searchCategoryByName(search)
+  const listCategories = Object.values(categories)
+
+  const newList = listCategories.map((element) => {
+    const { name, _id, active, createdAt } = element
+    const date = formatDateBasic(createdAt)
+    element.date = date
+    const id = _id.toString()
+    return { id, name, date, active }
+  }).filter((element) => {
+    if (chkactive === 'on') {
+      return element
+    }
+    return element.active === true
+  })
+
+  res.render('app/category', {
+    pagina: 'Category',
+    categories: newList,
+    // searchName: search
+    search: { name: search, chkactive }
+  })
+}
+
 const categoryNotFound = (_req: Request, res: Response): void => {
   res.redirect('/app/category')
 }
@@ -59,5 +96,6 @@ export {
   editCategoryGet,
   editCategoryPost,
   categoryNotFound,
+  categorySearchGet,
   deleteCategoryPost
 }

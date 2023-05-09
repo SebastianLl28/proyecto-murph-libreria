@@ -45,9 +45,13 @@
   grid-template-columns: 1fr 0.5fr;
   align-items: start;
   gap: 2em;
+  grid-template-rows: auto;
+  grid-auto-rows: 1fr;
+  grid-template-areas: "table form" "table search";
 }
 
 .form {
+  grid-area: form;
   display: flex;
   flex-direction: column;
   gap: 2em;
@@ -86,20 +90,29 @@
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  transition: all 0.5s ease;
+  transition: background-color, color 0.5s ease;
   width: 100%;
 }
 .form__submit:hover {
   background-color: #fff;
   color: #1d2532;
 }
+.form__cancel {
+  text-align: center;
+  font-weight: bold;
+  color: #ff1818;
+}
 
 .table {
+  grid-area: table;
   padding: 1rem;
   background-color: #1d2532;
   box-shadow: 20px 20px 60px #191f2b;
   max-height: 80vh;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   /* Ponemos un color de fondo y redondeamos las esquinas del thumb */
   /* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
   /* Cambiamos el fondo cuando esté en active */
@@ -129,7 +142,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
   gap: 1.5rem;
-  margin-top: 1rem;
   justify-items: center;
 }
 
@@ -214,4 +226,70 @@
   color: rgb(255, 49, 49);
   content: "is required or already registered";
   top: 2px;
+}
+
+.searchBox {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  padding: 1rem;
+  background-color: #161b25;
+  box-shadow: 20px 20px 60px #191f2b;
+}
+.searchBox__component {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  align-items: center;
+}
+.searchBox__chk {
+  -webkit-appearance: auto;
+     -moz-appearance: auto;
+          appearance: auto;
+}
+.searchBox__submit {
+  border: 1px solid #fff;
+  padding: 0.5em 2em;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: auto;
+  transition: background-color, color 0.5s;
+}
+.searchBox__submit:hover {
+  background-color: #fff;
+  color: #191f2b;
+}
+.searchBox__select {
+  border: 1px solid #fff;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+}
+.searchBox__option {
+  color: #1d2532;
+  cursor: pointer;
+  text-align: center;
+}
+
+.input {
+  position: relative;
+}
+.input__element {
+  border-bottom: 1px solid rgba(235, 235, 235, 0.1843137255);
+  height: 1.5em;
+  outline: none;
+}
+.input__decoration {
+  height: 2px;
+  width: 0%;
+  background-color: #4088fc;
+  bottom: 0;
+  position: absolute;
+  transition: width 0.3s ease;
+}
+.input__element:focus ~ .input__decoration {
+  width: 100%;
 }/*# sourceMappingURL=category.css.map */

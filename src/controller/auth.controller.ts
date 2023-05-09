@@ -1,15 +1,34 @@
 import { Request, Response } from 'express'
 import { registerUser, searchToken, searchTokenAndDelete } from '../services/auth.services'
 import { sendEmailPassword, sendMail } from '../config/emailer'
-import { changeUserConfirm, changeUserData, searchUserbyEmail, userIsConfirmed, userSetToken } from '../services/user.service'
+import { changeUserConfirm, changeUserData, searchUserbyEmail, searchUserbyId, userIsConfirmed, userSetToken } from '../services/user.service'
 import createToken from '../helpers/createToken'
 import { encrypt, verified } from '../helpers/bcrypt.handle'
 import generatejwt from '../helpers/jwt.helpers'
+import jwt from 'jsonwebtoken'
+import 'dotenv/config'
 
-const formLogin = (_req: Request, res: Response): void => {
-  res.render('auth/login', {
-    pagina: 'Login'
-  })
+const formLogin = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { _token } = req.cookies
+    if (_token === null) {
+      console.log('gaaaaa')
+      return res.render('auth/login', {
+        pagina: 'Login'
+      })
+    }
+    const decoded = jwt.verify(_token, process.env.SECRET_KEY as string)
+    const { id } = decoded as jwt.JwtPayload
+    const user = await searchUserbyId(id)
+    if (user === null) {
+      return res.clearCookie('_token').redirect('/auth/login')
+    }
+    return res.redirect('/app/dashboard')
+  } catch (err) {
+    return res.render('auth/login', {
+      pagina: 'Login'
+    })
+  }
 }
 
 const formLoginPost = async (req: Request, res: Response): Promise<void> => {

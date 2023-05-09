@@ -14,16 +14,39 @@ block contenido
   section.section
     article.table
       h2.table__title Category
+    
+      form.searchBox(method="POST", action="/category/search")
+        .searchBox__component
+          label.searchBox__label(for="search") name:
+          div.input
+            //- input#search.input__element(type="text", name="search", value = searchName ? searchName : "")
+            input#search.input__element(type="text", name="search", value = search ? search.name : "")
+            span.input__decoration
+        
+        .searchBox__component
+          label(for="chk") not active:
+          
+          input.searchBox__chk#chk(type="checkbox" name="chkactive", checked=(search ? search.chkactive == 'on' : false))
+        .searchBox__component
+          label(for="day") Date:
+          select.searchBox__select#day(name="day")
+            option.searchBox__option(value="all") all
+            option.searchBox__option(value="day") last day
+            option.searchBox__option(value="week") last week 
+            option.searchBox__option(value="month") last month 
+
+        input.searchBox__submit(type="submit", value="search")
+
       div.table__container
         
         //- div.card
-        //-   h2.card__title Titulo
-        //-   div.card__container
-        //-     p fecha:
-        //-     span 23 de Octubre
-        //-   div.card__buttons
-        //-     button.card__edit Edit 
-        //-     button.card__delete Delete  
+          h2.card__title Titulo
+          div.card__container
+            p fecha:
+            span 23 de Octubre
+          div.card__buttons
+            button.card__edit Edit 
+            button.card__delete Delete  
 
         each category in categories
           div(class=`${categorieEdit ? categorieEdit.id == category.id ? 'card-active' : '' : ''} card`)
@@ -44,6 +67,7 @@ block contenido
           input#name.form__input(type="text", name="name", value= name ? name : '')
           span.form__decoration
         input.form__submit(type="submit", value="Edit") 
+        a.form__cancel(href="/app/category") Cancelar
     else 
       form.form(method="POST" action="/category/add")
         h2.form__title New Category
@@ -52,6 +76,15 @@ block contenido
           input#name.form__input(type="text", name="name", value = name ? name : '')
           span.form__decoration
         input.form__submit(type="submit", value="Add")
+    //- form.searchBox(method="POST", action="/category/search")
+    //-   h2.searchBox__title Search
+    //-   input(type="checkbox", name="chkactive", class="searchBox__ckeck")
+    //-   div.searchBox__container
+    //-       label(for="search") Name
+    //-       input#search.searchBox__input(type="text", name="search" value = searchName ? searchName : '')
+    //-       span.searchBox__decoration
+      
+    //-   input.searchBox__submit(type="submit", value="search")
 
 block scripts
   script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11") 
